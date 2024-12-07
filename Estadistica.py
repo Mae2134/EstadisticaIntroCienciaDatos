@@ -1,7 +1,7 @@
 import math
-
+# Vals in en todo permite sacar valores que sean NaN
 # Promedio aritmético
-def calcular_promedio(vals_in):
+def promedio_cal(vals_in):
     """
     Calcula el promedio aritmético de una lista de vals_in.
     
@@ -21,7 +21,7 @@ def calcular_promedio(vals_in):
     return sum(vals) / len(vals)
 
 # Mediana
-def calcular_mediana(vals_in):
+def mediana_cal(vals_in):
     """
     Calcula la mediana de una lista de vals_in.
     
@@ -45,7 +45,7 @@ def calcular_mediana(vals_in):
         return vals[n // 2]
 
 # Moda
-def calcular_moda(datos):
+def moda_cal(datos):
     """
     Calcula la moda de una lista de datos.
     Si todos los elementos tienen la misma frecuencia, indica que no hay moda.
@@ -63,22 +63,18 @@ def calcular_moda(datos):
 	# Ordenar lista
     vals.sort()
 
-    cuentas = {}
-    
+    frecuencia = {}
     for x in datos:
-        if x in cuentas:
-            cuentas[x] += 1
+        if x in frecuencia:
+            frecuencia[x] += 1
         else:
-            cuentas[x] = 1
-    
-    max_frecuencia = max(cuentas.values())
-    
-    modas = [elemento for elemento, frecuencia in cuentas.items() if frecuencia == max_frecuencia]
-    
+            frecuencia[x] = 1
+    max_frecuencia = max(frecuencia.values())
+    modas = [elemento for elemento, frecuencia in frecuencia.items() if frecuencia == max_frecuencia]
     return modas
 
 # Rango
-def calcular_rango(vals_in):
+def rango_cal(vals_in):
     """
     Calcula el rango (máximo - mínimo) de una lista de vals_in.
     
@@ -98,15 +94,15 @@ def calcular_rango(vals_in):
     return max(vals) - min(vals)
 
 # Varianza
-def calcular_varianza(vals_in):
+def varianza_cal(vals_in):
     """
-    Calcula la varianza muestral de una lista de vals_in.
+    Calcula la varianza de una lista de vals_in.
     
     Parámetros:
         vals_in (list): Lista de números.
     
     Retorna:
-        float: Varianza muestral.
+        float: Varianza.
     """
     vals = []
     for v in vals_in:
@@ -115,11 +111,11 @@ def calcular_varianza(vals_in):
 	# Ordenar lista
     vals.sort()
 
-    promedio = calcular_promedio(vals)
-    return sum((x - promedio) ** 2 for x in vals) / (len(vals) - 1)
+    promedio = promedio_cal(vals)
+    return sum((i - promedio) ** 2 for i in vals) / len(vals)
 
 # Desviación estándar
-def calcular_desviacion_estandar(vals_in):
+def STD_cal(vals_in):
     """
     Calcula la desviación estándar muestral de una lista de vals_in.
     
@@ -136,10 +132,10 @@ def calcular_desviacion_estandar(vals_in):
 	# Ordenar lista
     vals.sort()
 
-    return math.sqrt(calcular_varianza(vals))
+    return math.sqrt(varianza_cal(vals))
 
 # Percentiles
-def calcular_percentiles(vals_in, percentil):
+def percentil_cal(vals_in, percentil):
     """
     Calcula el percentil especificado de una lista de vals_in.
     
@@ -157,16 +153,16 @@ def calcular_percentiles(vals_in, percentil):
 	# Ordenar lista
     vals.sort()
 
-    k = (len(vals_in) - 1) * (percentil / 100)
+    k = (len(vals) - 1) * (percentil / 100)
     f = int(k)  # Parte entera
     c = k - f   # Parte decimal
-    if f + 1 < len(vals_in):
+    if f + 1 < len(vals):
         return vals[f] + c * (vals[f + 1] - vals[f])
     else:
         return vals[f]
 
 # Rango intercuartílico
-def calcular_rango_intercuartilico(vals_in):
+def IQR_cal(vals_in):
     """
     Calcula el rango intercuartílico (Q3 - Q1) de una lista de vals_in.
     
@@ -183,12 +179,12 @@ def calcular_rango_intercuartilico(vals_in):
 	# Ordenar lista
     vals.sort()
 
-    q1 = calcular_percentiles(vals, 25)
-    q3 = calcular_percentiles(vals, 75)
+    q1 = percentil_cal(vals, 25)
+    q3 = percentil_cal(vals, 75)
     return q3 - q1
 
 # Desviación mediana absoluta
-def calcular_desviacion_mediana_absoluta(vals_in):
+def MAD_calc(vals_in):
     """
     Calcula la desviación mediana absoluta de una lista de vals_in.
     
@@ -205,20 +201,20 @@ def calcular_desviacion_mediana_absoluta(vals_in):
 	# Ordenar lista
     vals.sort()
 
-    mediana = calcular_mediana(vals)
+    mediana = mediana_cal(vals)
     desviaciones = [abs(x - mediana) for x in vals]
-    return calcular_mediana(desviaciones)
+    return mediana_cal(desviaciones)
 
 # prueba
 if __name__ == "__main__":
     vals_in = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-    print("Promedio:", calcular_promedio(vals_in))
-    print("Mediana:", calcular_mediana(vals_in))
-    print("Moda:", calcular_moda(vals_in))
-    print("Rango:", calcular_rango(vals_in))
-    print("Varianza:", calcular_varianza(vals_in))
-    print("Desviación estándar:", calcular_desviacion_estandar(vals_in))
-    print("Cuartiles (Q1, Q2, Q3):", calcular_percentiles(vals_in, 25), calcular_percentiles(vals_in, 50), calcular_percentiles(vals_in, 75))
-    print("Rango intercuartílico:", calcular_rango_intercuartilico(vals_in))
-    print("Desviación mediana absoluta:", calcular_desviacion_mediana_absoluta(vals_in))
+    print("Promedio:", promedio_cal(vals_in))
+    print("Mediana:", mediana_cal(vals_in))
+    print("Moda:", moda_cal(vals_in))
+    print("Rango:", rango_cal(vals_in))
+    print("Varianza:", varianza_cal(vals_in))
+    print("Desviación estándar:", STD_cal(vals_in))
+    print("Cuartiles (Q1, Q2, Q3):", percentil_cal(vals_in, 25), percentil_cal(vals_in, 50), percentil_cal(vals_in, 75))
+    print("Rango intercuartílico:", IQR_cal(vals_in))
+    print("Desviación mediana absoluta:", MAD_calc(vals_in))
