@@ -56,13 +56,6 @@ def moda_cal(datos):
     Retorna:
         int, float, list o str: Moda de los números en la lista o un mensaje indicando que no hay moda.
     """
-    vals = []
-    for v in datos:
-        if math.isfinite(v):
-            vals.append(v)
-	# Ordenar lista
-    vals.sort()
-
     frecuencia = {}
     for x in datos:
         if x in frecuencia:
