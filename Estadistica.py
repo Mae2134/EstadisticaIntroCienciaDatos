@@ -143,7 +143,8 @@ def percentil_cal(vals_in, percentil):
     for v in vals_in:
         if math.isfinite(v):
             vals.append(v)
-	# Ordenar lista
+
+    # Ordenar lista
     vals.sort()
 
     k = (len(vals) - 1) * (percentil / 100)
@@ -198,16 +199,52 @@ def MAD_calc(vals_in):
     desviaciones = [abs(x - mediana) for x in vals]
     return mediana_cal(desviaciones)
 
-# prueba
-if __name__ == "__main__":
-    vals_in = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+def covar_cal(x_vals,y_vals):
+    """
+    Calcula la covarianza de listas (x_vals,y_vals)
+    
+    Parámetros:
+        x_vals (list): números del eje x.
+        y_vals (list): números del eje y.
+    
+    Retorna:
+        float: Valor de la covarianza
+    """
+    x = []
+    y = []
+    for i in range(len(x_vals)):
+        if math.isfinite(x_vals[i]) and math.isfinite(y_vals[i]):
+            x.append(x_vals[i])
+            y.append(y_vals[i])
+    p_x = promedio_cal(x)
+    p_y = promedio_cal(y)
+    n = 0
+    for i in range(len(x)):
+        n += (x[i] - p_x) * (y[i] - p_y)
+    
+    covar_cal = n / (len(n))
+    return covar_cal
 
-    print("Promedio:", promedio_cal(vals_in))
-    print("Mediana:", mediana_cal(vals_in))
-    print("Moda:", moda_cal(vals_in))
-    print("Rango:", rango_cal(vals_in))
-    print("Varianza:", varianza_cal(vals_in))
-    print("Desviación estándar:", STD_cal(vals_in))
-    print("Cuartiles (Q1, Q2, Q3):", percentil_cal(vals_in, 25), percentil_cal(vals_in, 50), percentil_cal(vals_in, 75))
-    print("Rango intercuartílico:", IQR_cal(vals_in))
-    print("Desviación mediana absoluta:", MAD_calc(vals_in))
+def correlacion(x_vals,y_vals):
+    '''
+    Calcula el coeficiente de correlación de Pearson entre dos listas de valores.
+    
+    Parámetros:
+        x_vals (list): valores para X.
+        y_vals (list): valores para Y.
+    
+    Retorna:
+        float: Coeficiente de correlación de Pearson.
+    '''
+    x = []
+    y = []
+    for i in range(len(x_vals)):
+        if math.isfinite(x_vals[i]) and math.isfinite(y_vals[i]):
+            x.append(x_vals[i])
+            y.append(y_vals[i])
+    cov = covar_cal(x, y)
+    std_x = STD_cal(x)
+    std_y = STD_cal(y)
+    
+    rxy = cov / (std_x * std_y)
+    return rxy
