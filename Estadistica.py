@@ -225,7 +225,7 @@ def covar_cal(x_vals,y_vals):
     covar_cal = n / (len(n))
     return covar_cal
 
-def correlacion(x_vals,y_vals):
+def correlacion_calc(x_vals,y_vals):
     '''
     Calcula el coeficiente de correlación de Pearson entre dos listas de valores.
     
