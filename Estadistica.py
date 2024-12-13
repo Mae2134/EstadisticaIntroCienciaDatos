@@ -222,7 +222,7 @@ def covar_cal(x_vals,y_vals):
     for i in range(len(x)):
         n += (x[i] - p_x) * (y[i] - p_y)
     
-    covar_cal = n / (len(n))
+    covar_cal = n / (len(x))
     return covar_cal
 
 def correlacion_calc(x_vals,y_vals):
